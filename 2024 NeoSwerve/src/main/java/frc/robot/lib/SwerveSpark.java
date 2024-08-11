@@ -4,7 +4,7 @@ import com.revrobotics.CANSparkMax;
 
 import frc.robot.Constants.SwerveConstants;
 
-public class SwerveSpark extends CANSparkMax{
+public class SwerveSpark extends CANSparkMax {
     public SwerveSpark(int motorPort, boolean reverse) {
         super(motorPort, MotorType.kBrushless);
         this.restoreFactoryDefaults();

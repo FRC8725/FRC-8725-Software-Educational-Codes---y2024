@@ -1,9 +1,6 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -11,14 +8,12 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.DeviceId.Swerve;
 import frc.robot.DeviceId.Encoder;
 import frc.robot.Constants.MotorReverse;
 import frc.robot.Constants.SwerveConstants;
-import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.EncoderOffset;
 import frc.robot.Constants;
 
@@ -73,25 +68,6 @@ public class SwerveSubsystem extends SubsystemBase {
         );
         this.wait(1000);
         this.gyro.reset();
-
-        AutoBuilder.configureHolonomic(
-            this::getPose, 
-            this::resetPose,
-            this::getSpeeds,
-            this::autoDrive, 
-            new HolonomicPathFollowerConfig(
-                AutoConstants.PHYSICAL_MAX_SPEED_METERS_PER_SECOND,
-                0.3,
-                new ReplanningConfig(true, true)
-            ),
-            () -> {
-                if (DriverStation.getAlliance().isPresent()) {
-                    return DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
-                }
-                return false;
-            },
-            this
-        );
     }
 
     @Override

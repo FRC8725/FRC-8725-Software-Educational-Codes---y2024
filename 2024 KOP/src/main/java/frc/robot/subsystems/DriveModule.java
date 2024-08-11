@@ -9,15 +9,17 @@ public class DriveModule {
 
     public DriveModule(int port, boolean reverse) {
         this.motor = new VictorSPX(port);
+        this.motor.enableVoltageCompensation(true);
+        this.motor.configVoltageCompSaturation(15.0);
         this.motor.setInverted(reverse);
         this.motor.setNeutralMode(NeutralMode.Brake);
     }
 
     public void setDesiredState(double speed) {
-        this.motor.set(VictorSPXControlMode.PercentOutput, speed * 0.7);
+        this.motor.set(VictorSPXControlMode.PercentOutput, speed);
     }
 
-    public void stopModule() {
+    public void stop() {
         this.motor.set(VictorSPXControlMode.PercentOutput, 0.0);
     }
 }

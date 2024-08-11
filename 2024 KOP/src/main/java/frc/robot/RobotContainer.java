@@ -6,7 +6,7 @@ import frc.robot.commands.DriveCmd;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class RobotContainer {
-	private final XboxController driverJoystick = new XboxController(GamepadJoystick.DRIVER_PORT);
+	private final XboxController driverJoystick = new XboxController(GamepadJoystick.CONTROLLER_PORT);
 	private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	private final DriveCmd driveCmd = new DriveCmd(driveSubsystem, driverJoystick);
 

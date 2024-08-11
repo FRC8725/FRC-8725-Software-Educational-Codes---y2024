@@ -2,7 +2,9 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.Drive;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveCmd extends Command {
@@ -12,8 +14,7 @@ public class DriveCmd extends Command {
 	public DriveCmd(DriveSubsystem driveSubsystem, XboxController controller) {
 		this.driveSubsystem = driveSubsystem;
 		this.controller = controller;
-
-		addRequirements(this.driveSubsystem);
+		this.addRequirements(this.driveSubsystem);
 	}
 
 	@Override
@@ -21,9 +22,15 @@ public class DriveCmd extends Command {
 
 	@Override
 	public void execute() {
-		double driveSpeed = -MathUtil.applyDeadband(this.controller.getLeftY(), 0.05) * 0.3;
-		double turnSpeed = MathUtil.applyDeadband(this.controller.getRightX(), 0.05) * 0.5;
-		this.driveSubsystem.setSpeed(driveSpeed + turnSpeed, driveSpeed - turnSpeed);
+		double driveSpeed = -MathUtil.applyDeadband(this.controller.getLeftY(), Drive.DEAD_BAND) * Drive.MAX_SPEED;
+		double turnSpeed = MathUtil.applyDeadband(this.controller.getRightX(), Drive.DEAD_BAND) * Drive.MAX_TURN_SPEED;
+
+		double leftSpeed = driveSpeed + turnSpeed;
+		double rightSpeed = driveSpeed - turnSpeed;
+
+		this.driveSubsystem.move(leftSpeed, rightSpeed);
+		SmartDashboard.putNumber("LeftSpeed", leftSpeed);
+		SmartDashboard.putNumber("RightSpeed", rightSpeed);
 	}
 
 	@Override

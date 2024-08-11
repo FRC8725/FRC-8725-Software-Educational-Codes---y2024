@@ -5,8 +5,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
 public final class Constants {
 	public static final class SwerveConstants {
-		public static final double TRACK_WIDTH = 0.61; // 寬
-		public static final double TRACK_LENGTH = 0.61; // 長
+		public static final double TRACK_WIDTH = 0.66; // 寬
+		public static final double TRACK_LENGTH = 0.66; // 長
 		public static final double WHEEL_RADIUS = 0.0508; // 輪子半徑
 		
 		public static final double PHYSICAL_MAX_SPEED_METERS_PER_SECOND = 3.0; // 最大速度m/s
@@ -16,10 +16,6 @@ public final class Constants {
 
 		public static final double DRIVE_VELOCITY_CONVERSION_FACTOR = WHEEL_RADIUS * 2 / DRIVE_GEAR_RATIO * Math.PI / 60;
 		public static final double DRIVE_POSITION_CONVERSION_FACTOR = WHEEL_RADIUS * 2 / DRIVE_GEAR_RATIO * Math.PI;
-	}
-
-	public static final class AutoConstants {
-		public static final double PHYSICAL_MAX_SPEED_METERS_PER_SECOND = 1.0;
 	}
 	
 	public static final class MotorReverse {
@@ -42,10 +38,10 @@ public final class Constants {
 	}
 
 	public static final class EncoderOffset {
-		public static final double FRONT_LEFT = 121.376953125;
-		public static final double FRONT_RIGHT = 90.17578125;
-		public static final double BACK_LEFT = -87.890625;
-		public static final double BACK_RIGHT = -148.447265625;
+		public static final double FRONT_LEFT = 0.0;
+		public static final double FRONT_RIGHT = 0.0;
+		public static final double BACK_LEFT = 0.0;
+		public static final double BACK_RIGHT = 0.0;
 	}
 
 	public static final SwerveDriveKinematics swerveDriveKinematics = new SwerveDriveKinematics(

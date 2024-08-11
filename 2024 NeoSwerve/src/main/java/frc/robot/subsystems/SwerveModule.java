@@ -60,11 +60,7 @@ public class SwerveModule implements IDashboardProvider{
     public double getDriveEncoderVelocity() {
         return this.driveEncoder.getVelocity() * (this.driveEncoderReversed ? 1 : -1);
     }
-
-    public double getLinear() {
-        return SwerveConstants.WHEEL_RADIUS * 2 * Math.PI * this.driveEncoder.getVelocity() / 60;
-    }
-
+    
     public SwerveModuleState getState() {
         return new SwerveModuleState(
             this.getDriveEncoderVelocity(),
