@@ -4,6 +4,9 @@
 1. The left joystick Y-axis controls the front and back of the robot.
 2. Turning is controlled by the X axis of the right stick.
 
+## Neo KOP
+* Module Motor: Neo & CANSparkMax
+1. Treat the left and right sides each as a Module
 ## Neo Swerve
 * Driving Motor: Neo & CANSparkMax
 * Turning Motor: Neo & CANSparkMax
