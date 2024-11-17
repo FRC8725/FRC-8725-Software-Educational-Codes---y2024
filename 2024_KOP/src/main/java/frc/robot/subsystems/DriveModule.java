@@ -4,6 +4,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import frc.robot.Constants.Drive;
+
 public class DriveModule {
     private final VictorSPX motor;
 
@@ -16,7 +18,7 @@ public class DriveModule {
     }
 
     public void setDesiredState(double speed) {
-        this.motor.set(VictorSPXControlMode.PercentOutput, speed);
+        this.motor.set(VictorSPXControlMode.PercentOutput, speed * Drive.MAX_SPEED);
     }
 
     public void stop() {

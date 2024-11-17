@@ -1,18 +1,20 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.XboxController;
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.Constants;
 
 public class SwerveDriveCmd extends Command {
 	private final SwerveSubsystem swerveSubsystem;
-	private final XboxController controller;
+	private final Supplier<Double> xSpeed, ySpeed, rotationSpeed;
 
-	public SwerveDriveCmd(SwerveSubsystem swerveSubsystem, XboxController controller) {
+	public SwerveDriveCmd(SwerveSubsystem swerveSubsystem, Supplier<Double> xSpeed, Supplier<Double> ySpeed, Supplier<Double> rotationSpeed) {
 		this.swerveSubsystem = swerveSubsystem;
-		this.controller = controller;
+		this.xSpeed = xSpeed;
+		this.ySpeed = ySpeed;
+		this.rotationSpeed = rotationSpeed;
 		addRequirements(this.swerveSubsystem);
 	}
 
@@ -21,15 +23,7 @@ public class SwerveDriveCmd extends Command {
 
 	@Override
 	public void execute() {
-		double xSpeed = MathUtil.applyDeadband(this.controller.getLeftY(), Constants.DEAD_BAND) * Constants.MAX_SPEED;
-		double ySpeed = MathUtil.applyDeadband(this.controller.getLeftX(), Constants.DEAD_BAND) * Constants.MAX_SPEED;
-		double rotation = -MathUtil.applyDeadband(this.controller.getRightX(), Constants.DEAD_BAND) * Constants.MAX_ANGULAR_SPEED;
-
-		if (this.controller.getAButton()) {
-			this.swerveSubsystem.resetGyro();
-		}
-
-		this.swerveSubsystem.driveSwerve(xSpeed, ySpeed, rotation, Constants.gyroField);
+		this.swerveSubsystem.driveSwerve(this.xSpeed.get(), this.ySpeed.get(), this.rotationSpeed.get(), Constants.gyroField);
 	}
 
 	@Override

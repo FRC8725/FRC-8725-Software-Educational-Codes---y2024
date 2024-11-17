@@ -16,7 +16,6 @@ import frc.robot.DeviceId.Encoder;
 import frc.robot.Constants.MotorReverse;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.DriveEncoderReverse;
-import frc.robot.Constants.EncoderOffset;
 import frc.robot.Constants;
 
 public class SwerveSubsystem extends SubsystemBase implements IDashboardProvider {
@@ -36,7 +35,6 @@ public class SwerveSubsystem extends SubsystemBase implements IDashboardProvider
             MotorReverse.FRONT_LEFT_DRIVE,
             MotorReverse.FRONT_LEFT_TURN,
             DriveEncoderReverse.FRONT_LEFT,
-            EncoderOffset.FRONT_LEFT,
             "frontLeft"
         );
         this.frontRight = new SwerveModule(
@@ -46,7 +44,6 @@ public class SwerveSubsystem extends SubsystemBase implements IDashboardProvider
             MotorReverse.FRONT_RIGHT_DRIVE,
             MotorReverse.FRONT_RIGHT_TURN,
             DriveEncoderReverse.FRONT_RIGHT,
-            EncoderOffset.FRONT_RIGHT,
             "frontRight"
         );
         this.backLeft = new SwerveModule(
@@ -56,7 +53,6 @@ public class SwerveSubsystem extends SubsystemBase implements IDashboardProvider
             MotorReverse.BACK_LEFT_DRIVE,
             MotorReverse.BACK_LEFT_TURN,
             DriveEncoderReverse.BACK_LEFT,
-            EncoderOffset.BACK_LEFT,
             "backLeft"
         );
         this.backRight = new SwerveModule(
@@ -66,7 +62,6 @@ public class SwerveSubsystem extends SubsystemBase implements IDashboardProvider
             MotorReverse.BACK_RIGHT_DRIVE,
             MotorReverse.BACK_RIGHT_TURN,
             DriveEncoderReverse.BACK_RIGHT,
-            EncoderOffset.BACK_RIGHT,
             "backRight"
         );
         this.gyro = new AHRS(SPI.Port.kMXP);
@@ -95,7 +90,7 @@ public class SwerveSubsystem extends SubsystemBase implements IDashboardProvider
     }
 
     public void setModuleState(SwerveModuleState[] states) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(states, SwerveConstants.PHYSICAL_MAX_SPEED_METERS_PER_SECOND);
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, SwerveConstants.MAX_SPEED);
         this.frontLeft.setDesiredState(states[0]);
         this.frontRight.setDesiredState(states[1]);
         this.backLeft.setDesiredState(states[2]);

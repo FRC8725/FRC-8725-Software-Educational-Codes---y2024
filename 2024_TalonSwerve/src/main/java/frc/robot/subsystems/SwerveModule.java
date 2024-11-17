@@ -24,12 +24,10 @@ public class SwerveModule implements IDashboardProvider {
     private double driveOutput;
     private double turnOutput;
 
-    private final double turningEncoderOffset;
-
     public SwerveModule(
         int driveMotorPort, int turnMotorPort, int turnEncoderPort,
         boolean driveMotorReverse, boolean turnMotorReverse,
-        double turnEncoderOffset, String motorName
+        String motorName
     ){
         this.registerDashboard();
 
@@ -42,7 +40,6 @@ public class SwerveModule implements IDashboardProvider {
         this.turnPidController.enableContinuousInput(-180, 180);
 
         this.motorName = motorName;
-        this.turningEncoderOffset = turnEncoderOffset;
         this.resetEncoders();
     }
 
@@ -52,7 +49,7 @@ public class SwerveModule implements IDashboardProvider {
     }
 
     public double getTurnPosition() {
-        double value = Units.rotationsToDegrees(this.turnEncoder.getAbsolutePosition().getValue()) - this.turningEncoderOffset;
+        double value = Units.rotationsToDegrees(this.turnEncoder.getAbsolutePosition().getValue());
         value %= 360.0;
         return value > 180 ? value - 360 : value;
     }
@@ -78,7 +75,7 @@ public class SwerveModule implements IDashboardProvider {
         }
         SwerveModuleState state = SwerveModuleState.optimize(desiredState, this.getState().angle);
 
-        this.driveOutput = state.speedMetersPerSecond / SwerveConstants.PHYSICAL_MAX_SPEED_METERS_PER_SECOND;
+        this.driveOutput = state.speedMetersPerSecond / SwerveConstants.MAX_SPEED;
         this.turnOutput = this.turnPidController.calculate(
             this.getTurnPosition(), state.angle.getDegrees()
         );
@@ -89,8 +86,8 @@ public class SwerveModule implements IDashboardProvider {
 
     @Override
     public void putDashboard() {
-        SmartDashboard.putNumber(this.motorName + " LinearSpeed", this.getState().speedMetersPerSecond);
-        SmartDashboard.putNumber(this.motorName + " TurnPosition", this.getTurnPosition());
+        SmartDashboard.putNumber(this.motorName + " Drive Vel", this.getState().speedMetersPerSecond);
+        SmartDashboard.putNumber(this.motorName + " Turn Pos", this.getTurnPosition());
     }
 
     public void stop() {
